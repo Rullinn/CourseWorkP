@@ -35,10 +35,10 @@ public class TourGUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Загрузка данных из БД
+            // Завантаження даних з БД
             loadToursFromDB();
 
-            // Настройка интерфейса
+            // Налаштування інтерфейса
             setupUI(primaryStage);
 
         } catch (SQLException e) {
@@ -55,17 +55,17 @@ public class TourGUI extends Application {
     }
 
     private void setupUI(Stage stage) {
-        // Настройка элементов управления
+        // Налаштування елементів керування
         setupComboBoxes();
 
-        // Создание панели фильтрации и сортировки
+        // Створення панелі фільтрації та сортування
         HBox filterSortPanel = new HBox(10);
         filterSortPanel.getChildren().addAll(
                 new Label("Filter by type:"), typeFilter,
                 new Label("Sort by:"), sortOptions
         );
 
-        // Создание формы для ввода данных
+        // Створення форми для вводу даних
         GridPane inputForm = new GridPane();
         inputForm.setHgap(10);
         inputForm.setVgap(10);
@@ -88,21 +88,21 @@ public class TourGUI extends Application {
         inputForm.add(new Label("Start Date:"), 0, 7);
         inputForm.add(startDatePicker, 1, 7);
 
-        // Создание панели кнопок
+        // Створення панелі кнопок
         HBox buttonPanel = new HBox(10);
         buttonPanel.getChildren().addAll(addButton, updateButton, deleteButton);
 
-        // Настройка обработчиков событий
+        // Налаштування опрацювання подій
         setupEventHandlers();
 
-        // Создание основного макета
+        // Створення основного макету
         BorderPane root = new BorderPane();
         root.setTop(filterSortPanel);
         root.setCenter(tourListView);
         root.setLeft(inputForm);
         root.setBottom(buttonPanel);
 
-        // Настройка сцены и отображение
+        // Сцена і відображення
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Tour Management System");
         stage.setScene(scene);
@@ -131,11 +131,11 @@ public class TourGUI extends Application {
     }
 
     private void setupEventHandlers() {
-        // Фильтрация и сортировка
+        // Фільтрація і сортування
         typeFilter.setOnAction(e -> updateTourList());
         sortOptions.setOnAction(e -> updateTourList());
 
-        // Добавление тура
+        // Додавання Tour
         addButton.setOnAction(e -> {
             try {
                 Tour tour = createTourFromInput();
@@ -150,7 +150,7 @@ public class TourGUI extends Application {
             }
         });
 
-        // Обновление тура
+        // Оновлення Tour
         updateButton.setOnAction(e -> {
             String selected = tourListView.getSelectionModel().getSelectedItem();
             if (selected == null) {
@@ -174,7 +174,7 @@ public class TourGUI extends Application {
             }
         });
 
-        // Удаление тура
+        // Видалення Tour
         deleteButton.setOnAction(e -> {
             String selected = tourListView.getSelectionModel().getSelectedItem();
             if (selected == null) {
@@ -194,7 +194,7 @@ public class TourGUI extends Application {
             }
         });
 
-        // Выбор тура для редактирования
+        // Вибір туру для редагування
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 int id = extractIdFromListViewItem(newVal);
@@ -209,7 +209,7 @@ public class TourGUI extends Application {
     private void updateTourList() {
         List<Tour> tours;
 
-        // Фильтрация
+        // Фільтрація
         String type = typeFilter.getValue();
         if ("All".equals(type)) {
             tours = tourPackage.getAllTours();
@@ -217,7 +217,7 @@ public class TourGUI extends Application {
             tours = tourPackage.filterByType(type);
         }
 
-        // Сортировка
+        // Сортування
         String sortOption = sortOptions.getValue();
         if (sortOption != null) {
             switch (sortOption) {
@@ -242,7 +242,7 @@ public class TourGUI extends Application {
             }
         }
 
-        // Обновление списка
+        // Оновлення списку
         tourListView.getItems().clear();
         for (Tour tour : tours) {
             tourListView.getItems().add(tour.getId() + ": " + tour.toString());

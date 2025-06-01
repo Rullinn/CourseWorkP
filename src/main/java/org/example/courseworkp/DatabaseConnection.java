@@ -29,7 +29,7 @@ public class DatabaseConnection {
         return dataSource.getConnection();
     }
 
-    // Додайте метод для закриття пулу (викликати при завершенні роботи додатка)
+    //Метод для закриття пулу (викликати при завершенні роботи додатка)
     public static void closePool() {
         if (dataSource != null && !dataSource.isClosed()) {
             dataSource.close();

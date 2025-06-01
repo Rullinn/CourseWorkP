@@ -8,7 +8,7 @@ public class TourLogger {
 
     public TourLogger() {
         try {
-            // Создаем файловый обработчик
+            // Створення файлового і опрацювання
             FileHandler fileHandler = new FileHandler("tour_system.log", true);
             fileHandler.setFormatter(new SimpleFormatter());
             logger.addHandler(fileHandler);
@@ -41,7 +41,7 @@ class EmailHandler extends Handler {
     @Override
     public void publish(LogRecord record) {
         if (record.getLevel() == Level.SEVERE) {
-            // Здесь должна быть реализация отправки email
+            // Реалізація створення email
             System.out.println("Sending email for critical error: " + record.getMessage());
         }
     }
